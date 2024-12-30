@@ -8,6 +8,6 @@ if __name__ == '__main__':
     app = QApplication(sys.argv)
     win = MainWindow()
     #win.show()
-    win.showMaximized()  # 最大化顯示
+    win.show()  # 最大化顯示
     #print(vars(win))
     sys.exit(app.exec_())
