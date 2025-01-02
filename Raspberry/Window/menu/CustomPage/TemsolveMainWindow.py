@@ -70,11 +70,11 @@ class TemsolveMainWindow(QWidget):
         self.input_field.setFixedHeight(50)
         self.input_field.setStyleSheet("""
             border-radius: 25px;
-            padding-left: 10px;
+            padding-left: 20px;
             background-color: rgba(200, 200, 200, 0.5);
         """)
         self.input_field.setPlaceholderText("Type a message...")
-        self.input_field.setMaximumHeight(100)  # 設置最大高度
+        self.input_field.setMaximumHeight(40)  # 設置最大高度
         self.input_field.textChanged.connect(
             self.adjust_input_height)  # 根據文字調整高度
         input_layout.addWidget(self.input_field)

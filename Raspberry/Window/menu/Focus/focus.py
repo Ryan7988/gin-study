@@ -30,6 +30,12 @@ class VideoThread(QThread):
         self.concern_value = 0.0
         self.data_count = 0
         self.data_max = 50
+                # 創建返回按鈕
+        width=800
+        height=480
+        self.back_button = QPushButton('', self)
+        self.back_button.setGeometry(
+            0, 0, int(width*0.06), int(height*0.0807265))
 
     def run(self):
         while self._run_flag:
@@ -185,10 +191,14 @@ class FocusDetectionPage(QWidget):
 
         self.focus_warning_shown = False
 
+        
+
     # 動態調整背景圖片的大小
     def resizeEvent(self, event):
         self.background_label.setGeometry(0, 0, self.width(), self.height())
         super(FocusDetectionPage, self).resizeEvent(event)
+        self.back_button.setGeometry(
+            0, 0, int(800*0.055), int(480*0.0807265))
 
     # 選擇科目
     def select_subject(self, subject):
@@ -250,3 +260,5 @@ class FocusDetectionPage(QWidget):
     def closeEvent(self, event):
         self.thread.stop()
         event.accept()
+
+

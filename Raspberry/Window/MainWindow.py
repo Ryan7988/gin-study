@@ -55,6 +55,7 @@ class MainWindow(QMainWindow):
         self.ClubPage.setPixmap(pixmap4)
         self.ClubPage.setScaledContents(True)
         self.ClubPage.setFixedSize(800, 480)
+        self.ClubPage.back_button.clicked.connect(lambda _, Page="主菜單": self.showPage(Page))
         self.addStackedWidget_updatePageIndexMap("讀書會", self.ClubPage)
         self.create_buttons_ClubPage()
 
@@ -76,6 +77,7 @@ class MainWindow(QMainWindow):
         # 第七頁 (專注偵測)
         self.FocusDetectionPage = FocusDetectionPage(self)
         self.FocusDetectionPage.setFixedSize(800, 480)
+        self.FocusDetectionPage.back_button.clicked.connect(lambda _, Page="主菜單": self.showPage(Page))
         self.addStackedWidget_updatePageIndexMap("專注偵測", self.FocusDetectionPage)
 
         # 分析頁面
@@ -108,28 +110,50 @@ class MainWindow(QMainWindow):
 
     def create_buttons_MainPage(self):
         width, height = 800, 480
-        button_width = int(width * 0.39)
-        button_height = int(height * 0.12)
+        button_width = int(width * 0.15)
+        button_height = int(height * 0.08)
 
         # 登入按鈕 - 放置在右下角偏右的位置
-        self.button_signin = QPushButton('Sign-In', self.MainPage)
-        self.button_signin.setGeometry(int(width * 0.80), int(height * 0.825), button_width, button_height)
+        self.button_signup = QPushButton('Sign-Up', self.MainPage)
+        self.button_signup.setGeometry(int(width * 0.7), int(height * 0.79), button_width, button_height)
 
         # 註冊按鈕 - 放置在右下角偏左的位置
-        self.button_signup = QPushButton('Sign-Up', self.MainPage)
-        self.button_signup.setGeometry(int(width * 0.4), int(height * 0.825), button_width, button_height)
-        self.button_signup.clicked.connect(lambda _, Page="註冊": self.showPage(Page))
+        self.button_signin = QPushButton('Sign-In', self.MainPage)
+        self.button_signin.setGeometry(int(width * 0.55), int(height * 0.79), button_width, button_height)
 
+        self.button_signup.clicked.connect(lambda _, Page="註冊": self.showPage(Page))
         self.button_signin.clicked.connect(lambda _, Page="登入": self.showPage(Page))
 
+    # def create_buttons_MenuPage(self):
+    #     button_names = ["解題", "專注偵測", "英文翻譯", "統計", "讀書會"]
+    #     self.buttons = []
+    #     for i, name in enumerate(button_names):
+    #         btn = QPushButton(name, self.MenuPage)
+    #         btn.setGeometry(100 + i * 120, 200, 100, 50)
+    #         btn.clicked.connect(lambda _, Page=name: self.showPage(Page))
+    #         self.buttons.append(btn)
     def create_buttons_MenuPage(self):
+    # 按鈕名稱
         button_names = ["解題", "專注偵測", "英文翻譯", "統計", "讀書會"]
+
+        # 自定義每個按鈕的位置和大小 (x, y, width, height)
+        button_positions = [
+            (100, 110, 170, 130),  # 解題
+            (315, 110, 170, 130),  # 專注偵測
+            (530, 110, 170, 130),  # 英文翻譯
+            (205, 280, 170, 125),  # 統計
+            (420, 280, 170, 125)   # 讀書會
+        ]
+
         self.buttons = []
         for i, name in enumerate(button_names):
             btn = QPushButton(name, self.MenuPage)
-            btn.setGeometry(100 + i * 120, 200, 100, 50)
+            # 設置按鈕的位置和大小
+            btn.setGeometry(*button_positions[i])
+            # 設置按鈕的點擊事件
             btn.clicked.connect(lambda _, Page=name: self.showPage(Page))
             self.buttons.append(btn)
+
 
     def create_buttons_ClubPage(self):
         self.button_club_chart = QPushButton('讀書會圖表', self.ClubPage)
@@ -191,33 +215,33 @@ class MainWindow(QMainWindow):
     def createSignupPage(self):
         self.signup_username = QLineEdit(self.signup_page)
         self.signup_username.setPlaceholderText("請輸入用戶名")
-        self.signup_username.setGeometry(200, 100, 400, 50)
+        self.signup_username.setGeometry(345, 110, 250, 40)
 
         self.signup_account = QLineEdit(self.signup_page)
         self.signup_account.setPlaceholderText("請輸入帳號")
-        self.signup_account.setGeometry(200, 200, 400, 50)
+        self.signup_account.setGeometry(345, 180, 250, 40)
 
         self.signup_password = QLineEdit(self.signup_page)
         self.signup_password.setPlaceholderText("請輸入密碼")
-        self.signup_password.setGeometry(200, 300, 400, 50)
+        self.signup_password.setGeometry(345, 250, 250, 40)
         self.signup_password.setEchoMode(QLineEdit.Password)
 
         self.signup_button = QPushButton('註冊', self.signup_page)
-        self.signup_button.setGeometry(200, 400, 150, 50)
+        self.signup_button.setGeometry(360, 360, 180, 85)
         self.signup_button.clicked.connect(self.handleSignup)
 
     def createSigninPage(self):
         self.signin_account = QLineEdit(self.signin_page)
         self.signin_account.setPlaceholderText("請輸入帳號")
-        self.signin_account.setGeometry(200, 100, 400, 50)
+        self.signin_account.setGeometry(340, 110, 250, 40)
 
         self.signin_password = QLineEdit(self.signin_page)
         self.signin_password.setPlaceholderText("請輸入密碼")
-        self.signin_password.setGeometry(200, 200, 400, 50)
+        self.signin_password.setGeometry(345, 180, 250, 40)
         self.signin_password.setEchoMode(QLineEdit.Password)
 
         self.signin_button = QPushButton('登入', self.signin_page)
-        self.signin_button.setGeometry(200, 300, 150, 50)
+        self.signin_button.setGeometry(360, 360, 180, 85)
         self.signin_button.clicked.connect(self.handleSignin)
 
     def handleSignup(self):
